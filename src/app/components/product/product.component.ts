@@ -13,6 +13,7 @@ export class ProductComponent implements OnInit {
   
   products:Product[]= [];
   dataLoaded=false;
+  filterText:"";
 
   
 
@@ -42,6 +43,9 @@ export class ProductComponent implements OnInit {
         this.products=response.data;
         this.dataLoaded=true;
       })
-       };
+       }
+       addToCart(product:Product){
+console.log(product);
+       }
 
 }
