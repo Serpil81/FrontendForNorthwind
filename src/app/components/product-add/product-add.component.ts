@@ -36,18 +36,24 @@ export class ProductAddComponent implements OnInit {
     });
   }
 
-  add() {
-    if (this.productAddForm.valid) {
-      let productModel = Object.assign({}, this.productAddForm.value);
-      this.productService.add(productModel).subscribe((response) => {
-        console.log(response);
-      this.toastrService.success(response.message,"Product Successfully Added.")
-      },
-      responseError=>{console.log(responseError)
-      this.toastrService.error(responseError.error)
+  add(){
+    if(this.productAddForm.valid){
+      let productModel = Object.assign({},this.productAddForm.value)
+      this.productService.add(productModel).subscribe(response=>{
+        this.toastrService.success(response.message,"Successful")
+      },responseError=>{
+        if(responseError.error.Errors.length>0){
+          for (let i = 0; i <responseError.error.Errors.length; i++) {
+            this.toastrService.error(responseError.error.Errors[i].ErrorMessage
+              ,"Validation Error")
+          }       
+        } 
       })
-    } else {
-      this.toastrService.error('Your Form has missing values.');
+      
+    }else{
+      this.toastrService.error("Form Has Absent Values","Be Carefull")
     }
+    
   }
+
 }
